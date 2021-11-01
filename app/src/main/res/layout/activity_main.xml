@@ -22,39 +22,118 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="315dp"
-        android:layout_height="334dp"
+        android:layout_width="355dp"
+        android:layout_height="124dp"
         android:contentDescription="@string/task_viewer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.345"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.184"
         app:srcCompat="@drawable/task"
         tools:ignore="ImageContrastCheck"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
         android:id="@+id/button_add_task"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginBottom="108dp"
+        android:layout_width="119dp"
+        android:layout_height="48dp"
         android:backgroundTint="#42ACA2"
         android:text="@string/add_task"
         android:textColor="#263238"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.883" />
 
     <Button
         android:id="@+id/button_all_tasks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="108dp"
         android:backgroundTint="@color/button_primary"
         android:text="@string/all_tasks"
         android:textColor="#263238"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.946"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.882" />
+
+    <TextView
+        android:id="@+id/text_1"
+        android:layout_width="311dp"
+        android:layout_height="48dp"
+        android:onClick="goToTaskDetail"
+        android:text="@string/task_1"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.237"
+        tools:ignore="UsingOnClickInXml" />
+
+    <TextView
+        android:id="@+id/task_2"
+        android:layout_width="311dp"
+        android:layout_height="48dp"
+        android:onClick="goToTaskDetail"
+        android:text="@string/task_2"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.599"
+        tools:ignore="UsingOnClickInXml" />
+
+    <TextView
+        android:id="@+id/task_3"
+        android:layout_width="310dp"
+        android:layout_height="48dp"
+        android:onClick="goToTaskDetail"
+        android:text="@string/task_3"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.708"
+        tools:ignore="UsingOnClickInXml" />
+
+    <TextView
+        android:id="@+id/main_text_username"
+        android:layout_width="151dp"
+        android:layout_height="42dp"
+        android:text="@string/username"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/text_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <Button
+        android:id="@+id/button_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_primary"
+        android:text="@string/settings"
+        android:textColor="@color/button_test"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.882" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

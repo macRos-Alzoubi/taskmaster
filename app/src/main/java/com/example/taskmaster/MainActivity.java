@@ -3,9 +3,12 @@ package com.example.taskmaster;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,5 +30,29 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, AllTasks.class);
             startActivity(intent);
         });
+
+        findViewById(R.id.button_settings).setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, SettingsPage.class);
+            startActivity(intent);
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String username = sharedPreferences.getString("username","username");
+
+        TextView usernameText = findViewById(R.id.main_text_username);
+        System.out.println(usernameText);
+        usernameText.setText(username);
+    }
+
+    public void goToTaskDetail(View view){
+        int id = view.getId();
+        TextView textView = findViewById(id);
+        Intent intent = new Intent(MainActivity.this, TaskDetail.class);
+        intent.putExtra("taskTitle", textView.getText());
+        startActivity(intent);
     }
 }
