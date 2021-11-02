@@ -44,10 +44,10 @@
         android:textColor="#263238"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintHorizontal_bias="0.037"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.883" />
+        app:layout_constraintVertical_bias="0.882" />
 
     <Button
         android:id="@+id/button_all_tasks"
@@ -64,63 +64,19 @@
         app:layout_constraintVertical_bias="0.882" />
 
     <TextView
-        android:id="@+id/text_1"
-        android:layout_width="311dp"
-        android:layout_height="48dp"
-        android:onClick="goToTaskDetail"
-        android:text="@string/task_1"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.237"
-        tools:ignore="UsingOnClickInXml" />
-
-    <TextView
-        android:id="@+id/task_2"
-        android:layout_width="311dp"
-        android:layout_height="48dp"
-        android:onClick="goToTaskDetail"
-        android:text="@string/task_2"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.599"
-        tools:ignore="UsingOnClickInXml" />
-
-    <TextView
-        android:id="@+id/task_3"
-        android:layout_width="310dp"
-        android:layout_height="48dp"
-        android:onClick="goToTaskDetail"
-        android:text="@string/task_3"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.708"
-        tools:ignore="UsingOnClickInXml" />
-
-    <TextView
         android:id="@+id/main_text_username"
         android:layout_width="151dp"
         android:layout_height="42dp"
+        android:layout_marginTop="24dp"
         android:text="@string/username"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/text_1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/button_settings"
@@ -131,9 +87,19 @@
         android:textColor="@color/button_test"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.882" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/task_recyleView"
+        android:layout_width="350dp"
+        android:layout_height="260dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_add_task"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_text_username"
+        tools:itemCount="0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

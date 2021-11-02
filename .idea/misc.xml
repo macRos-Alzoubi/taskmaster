@@ -5,9 +5,11 @@
       <map>
         <entry key="..\:/Users/STUDENT/java-401/taskMaster/app/src/main/res/layout/activity_add_task.xml" value="0.33" />
         <entry key="..\:/Users/STUDENT/java-401/taskMaster/app/src/main/res/layout/activity_all_tasks.xml" value="0.22" />
-        <entry key="..\:/Users/STUDENT/java-401/taskMaster/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/Users/STUDENT/java-401/taskMaster/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/STUDENT/java-401/taskMaster/app/src/main/res/layout/activity_settings_page.xml" value="0.33" />
-        <entry key="..\:/Users/STUDENT/java-401/taskMaster/app/src/main/res/layout/activity_task_detail.xml" value="0.25" />
+        <entry key="..\:/Users/STUDENT/java-401/taskMaster/app/src/main/res/layout/activity_task_detail.xml" value="0.33" />
+        <entry key="..\:/Users/STUDENT/java-401/taskMaster/app/src/main/res/layout/fragment_student.xml" value="0.25" />
+        <entry key="..\:/Users/STUDENT/java-401/taskMaster/app/src/main/res/layout/fragment_task_list.xml" value="0.25" />
       </map>
     </option>
   </component>
