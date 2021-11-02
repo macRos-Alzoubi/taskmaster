@@ -1,6 +1,8 @@
 package com.example.taskmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +11,9 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +40,18 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, SettingsPage.class);
             startActivity(intent);
         });
+
+        List<TaskModel> taskList = new ArrayList<>();
+        taskList.add(new TaskModel("Car Fix","Remember at monday i have to fix the car","new"));
+        taskList.add(new TaskModel("water the flowers","Remember to water the flowers at sunday morning","assigned"));
+        taskList.add(new TaskModel("buy new phone","Remember to buy a new phone for jack","in progress"));
+
+
+        RecyclerView recyclerView = findViewById(R.id.task_recyleView);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        recyclerView.setAdapter(new TaskViewAdapter(taskList));
     }
 
     @Override
