@@ -8,19 +8,23 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    List<TaskModel> taskList = new ArrayList<>();
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        recyclerView = findViewById(R.id.task_recyleView);
 
         Button button = findViewById(R.id.button_add_task);
 
@@ -41,16 +45,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        List<TaskModel> taskList = new ArrayList<>();
-        taskList.add(new TaskModel("Car Fix","Remember at monday i have to fix the car","new"));
-        taskList.add(new TaskModel("water the flowers","Remember to water the flowers at sunday morning","assigned"));
-        taskList.add(new TaskModel("buy new phone","Remember to buy a new phone for jack","in progress"));
 
-
-        RecyclerView recyclerView = findViewById(R.id.task_recyleView);
-
+        AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+        taskList = db.taskDao().findAll();
+        System.out.println(taskList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         recyclerView.setAdapter(new TaskViewAdapter(taskList));
     }
 
@@ -63,13 +62,5 @@ public class MainActivity extends AppCompatActivity {
         TextView usernameText = findViewById(R.id.main_text_username);
         System.out.println(usernameText);
         usernameText.setText(username);
-    }
-
-    public void goToTaskDetail(View view){
-        int id = view.getId();
-        TextView textView = findViewById(id);
-        Intent intent = new Intent(MainActivity.this, TaskDetail.class);
-        intent.putExtra("taskTitle", textView.getText());
-        startActivity(intent);
     }
 }

@@ -17,3 +17,9 @@ Android app that help you manging your tasks in friendly way
 ![HomePage](app/screenshots/lab-28_home.png)
 ![taskDetail](app/screenshots/lab-28_task-detail.png)
 
+## lab 29
+
+![HomePage](app/screenshots/lab_29_home.png)
+![taskDetail](app/screenshots/lab_29_task_details.png)
+![addTask](app/screenshots/lab_29_add_task.png)
+
