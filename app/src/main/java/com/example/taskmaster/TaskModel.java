@@ -1,9 +1,16 @@
 package com.example.taskmaster;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class TaskModel {
-    private String title;
-    private String body;
-    private String status;
+    @PrimaryKey(autoGenerate = true)
+    public Long id;
+
+    private final String title;
+    private final String body;
+    private final String status;
 
     public TaskModel(String title, String body, String status) {
         this.title = title;
@@ -21,5 +28,15 @@ public class TaskModel {
 
     public String getStatus() {
         return status;
+    }
+
+    @Override
+    public String toString() {
+        return "TaskModel{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

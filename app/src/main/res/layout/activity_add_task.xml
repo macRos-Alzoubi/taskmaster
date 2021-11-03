@@ -28,35 +28,36 @@
         app:layout_constraintHorizontal_bias="0.105"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.256" />
+        app:layout_constraintVertical_bias="0.301" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/text_task_title_2"
         android:layout_width="339dp"
         android:layout_height="48dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="204dp"
+        android:autofillHints="My Tasks"
         android:ems="10"
+        android:hint="@string/my_task"
         android:inputType="textPersonName"
-        android:text="@string/my_task"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:autofillHints="My Tasks"
+        app:layout_constraintVertical_bias="0.345"
         tools:ignore="LabelFor" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/text_task_description"
         android:layout_width="339dp"
         android:layout_height="48dp"
+        android:autofillHints="Do Something"
         android:ems="10"
+        android:hint="@string/do_something"
         android:inputType="textPersonName"
-        android:text="@string/do_something"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.499"
-        android:autofillHints="Do Something"
         tools:ignore="LabelFor" />
 
     <TextView
@@ -97,6 +98,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.893" />
+
+    <Spinner
+        android:id="@+id/task_status_dropdown"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.847"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.226" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
