@@ -5,6 +5,7 @@ subscription OnCreateTask {
     title
     description
     status
+    teamId
     createdAt
     updatedAt
   }
@@ -15,6 +16,7 @@ subscription OnUpdateTask {
     title
     description
     status
+    teamId
     createdAt
     updatedAt
   }
@@ -25,6 +27,67 @@ subscription OnDeleteTask {
     title
     description
     status
+    teamId
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateTeam {
+  onCreateTeam {
+    id
+    name
+    tasks {
+      items {
+        id
+        title
+        description
+        status
+        teamId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateTeam {
+  onUpdateTeam {
+    id
+    name
+    tasks {
+      items {
+        id
+        title
+        description
+        status
+        teamId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteTeam {
+  onDeleteTeam {
+    id
+    name
+    tasks {
+      items {
+        id
+        title
+        description
+        status
+        teamId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
