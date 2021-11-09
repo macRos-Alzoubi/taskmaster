@@ -9,12 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.datastore.generated.model.Task;
+
 import java.util.List;
 
 public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskViewHolder> {
-    private List<TaskModel> taskList;
+    private List<Task> taskList;
 
-    public TaskViewAdapter(List<TaskModel> taskList) {
+    public TaskViewAdapter(List<Task> taskList) {
         this.taskList = taskList;
     }
 
@@ -27,9 +29,9 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
 
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
-        holder.taskModel = taskList.get(position);
+        holder.task = taskList.get(position);
         TextView textView = holder.view.findViewById(R.id.text_task_title);
-        textView.setText(holder.taskModel.getTitle());
+        textView.setText(holder.task.getTitle());
     }
 
     @Override
@@ -39,7 +41,7 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
 
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public TaskModel taskModel;
+        public Task task;
 
         public View view;
 
@@ -53,9 +55,9 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), TaskDetail.class);
-            intent.putExtra("title", taskModel.getTitle());
-            intent.putExtra("body", taskModel.getBody());
-            intent.putExtra("status", taskModel.getStatus());
+            intent.putExtra("title", task.getTitle());
+            intent.putExtra("body", task.getDescription());
+            intent.putExtra("status", task.getStatus());
             view.getContext().startActivity(intent);
         }
     }
