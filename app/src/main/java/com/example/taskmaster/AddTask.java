@@ -38,10 +38,7 @@ public class AddTask extends AppCompatActivity {
         teamArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         teamSpinner.setAdapter(teamArrayAdapter);
 
-
-
         Button button = findViewById(R.id.button_add_task);
-
         //
         //save button onClickListener handler
         button.setOnClickListener(View -> {

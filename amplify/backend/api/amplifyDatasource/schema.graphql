@@ -14,4 +14,3 @@ type Team @model{
   name: String!
   tasks: [Task] @connection(keyName: "byTeam", fields: ["id"])
 }
-
