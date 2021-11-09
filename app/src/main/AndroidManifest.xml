@@ -12,21 +12,26 @@
         <activity
             android:name=".SettingsPage"
             android:exported="false"
+            android:launchMode="singleTop"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".TaskDetail"
             android:exported="false"
+            android:launchMode="singleTop"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AllTasks"
             android:exported="true"
+            android:launchMode="singleTop"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AddTask"
             android:exported="true"
+            android:launchMode="singleTop"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleTop"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

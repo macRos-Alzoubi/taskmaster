@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 @Database(entities = {TaskModel.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract TaskDao taskDao();
-    private static AppDatabase appDatabase;
+    public static AppDatabase appDatabase;
 
     public AppDatabase(){}
 
