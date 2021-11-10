@@ -14,18 +14,22 @@ import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.Task;
+import com.amplifyframework.datastore.generated.model.Team;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -66,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         getDataFromDynamoDBApi();
 
         handler = new Handler(Looper.getMainLooper(), message -> {
-            if(taskList.size() > 0){
+            if (taskList.size() > 0) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
                 recyclerView.setAdapter(new TaskViewAdapter(taskList));
                 recyclerView.getAdapter().notifyDataSetChanged();
@@ -89,11 +93,30 @@ public class MainActivity extends AppCompatActivity {
         getDataFromDynamoDBApi();
     }
 
+    private void seedTeams() {
+        String[] teams = getResources().getStringArray(R.array.teams);
+        Team teamObj;
+
+        for (String team : teams) {
+            teamObj = Team.builder().name(team).build();
+            Amplify.API.mutate(ModelMutation.create(teamObj),
+                    res -> Log.i("MainActivity", String.format("Team %s has been successfully saved!", team)),
+                    error -> Log.i("MainActivity", error.getMessage()));
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void getDataFromDynamoDBApi() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String team = sharedPreferences.getString("team", "Max");
-        Amplify.API.query(ModelQuery.list(Task.class,  Task.TEAM_ID.contains(team)),// edit team_id and add team obj or team name and query by it
+        String name = sharedPreferences.getString("team", "Max");
+        final Team[] team = new Team[1];
+
+        Amplify.API.query(ModelQuery.get(Team.class, name),
+                res ->
+                        team[0] = Team.builder().name(name).id(res.getData().getId()).build()
+                , error -> Log.i("MainActivity", error.getMessage()));
+
+        Amplify.API.query(ModelQuery.list(Task.class, Task.TEAM_ID.contains(team[0].getId())),// edit team_id and add team obj or team name and query by it
                 success -> {
                     taskList = new ArrayList<>();
                     success.getData().forEach(task -> taskList.add(task));
