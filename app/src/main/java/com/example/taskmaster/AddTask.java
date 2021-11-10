@@ -27,14 +27,18 @@ public class AddTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
-        Spinner spinner = findViewById(R.id.task_status_dropdown);
+        Spinner teamSpinner = findViewById(R.id.team_spinner);
+        Spinner statusSpinner = findViewById(R.id.task_status_dropdown);
 
         ArrayAdapter<CharSequence> statusListAdapter = ArrayAdapter.createFromResource(this, R.array.task_status, android.R.layout.simple_spinner_item);
         statusListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(statusListAdapter);
+        statusSpinner.setAdapter(statusListAdapter);
+
+        ArrayAdapter<CharSequence> teamArrayAdapter = ArrayAdapter.createFromResource(this, R.array.teams, android.R.layout.simple_spinner_item);
+        teamArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        teamSpinner.setAdapter(teamArrayAdapter);
 
         Button button = findViewById(R.id.button_add_task);
-
         //
         //save button onClickListener handler
         button.setOnClickListener(View -> {
@@ -46,13 +50,15 @@ public class AddTask extends AppCompatActivity {
 
             String taskTitle = task_title.getText().toString();
             String taskDescription = task_description.getText().toString();
-            String taskStatus = spinner.getSelectedItem().toString();
+            String taskStatus = statusSpinner.getSelectedItem().toString();
+            String tasksTeam =  teamSpinner.getSelectedItem().toString();
 
 //            saveToDataStore(taskTitle, taskDescription, taskStatus);
             saveToApi(taskTitle, taskDescription, taskStatus);
 
             taskCount = sharedPreferences.getLong("taskCount", 0);
             editor.putLong("taskCount", taskCount + 1);
+            editor.putString("team", tasksTeam);
             editor.apply();
 
             Toast toast = Toast.makeText(getApplicationContext(), "Submitted", Toast.LENGTH_LONG);

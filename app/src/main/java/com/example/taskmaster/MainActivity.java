@@ -66,10 +66,11 @@ public class MainActivity extends AppCompatActivity {
         getDataFromDynamoDBApi();
 
         handler = new Handler(Looper.getMainLooper(), message -> {
-            System.out.println("");
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(new TaskViewAdapter(taskList));
-            recyclerView.getAdapter().notifyDataSetChanged();
+            if(taskList.size() > 0){
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                recyclerView.setAdapter(new TaskViewAdapter(taskList));
+                recyclerView.getAdapter().notifyDataSetChanged();
+            }
             return false;
         });
 
@@ -90,8 +91,9 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void getDataFromDynamoDBApi() {
-
-        Amplify.API.query(ModelQuery.list(Task.class),
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String team = sharedPreferences.getString("team", "Max");
+        Amplify.API.query(ModelQuery.list(Task.class,  Task.TEAM_ID.contains(team)),// edit team_id and add team obj or team name and query by it
                 success -> {
                     taskList = new ArrayList<>();
                     success.getData().forEach(task -> taskList.add(task));
