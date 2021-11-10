@@ -14,8 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
+import com.amplifyframework.datastore.generated.model.Team;
+
 
 public class AddTask extends AppCompatActivity {
     private static final String TAG = "AddTask";
@@ -51,10 +54,10 @@ public class AddTask extends AppCompatActivity {
             String taskTitle = task_title.getText().toString();
             String taskDescription = task_description.getText().toString();
             String taskStatus = statusSpinner.getSelectedItem().toString();
-            String tasksTeam =  teamSpinner.getSelectedItem().toString();
+            String tasksTeam = teamSpinner.getSelectedItem().toString();
 
 //            saveToDataStore(taskTitle, taskDescription, taskStatus);
-            saveToApi(taskTitle, taskDescription, taskStatus);
+            saveToApi(tasksTeam, taskTitle, taskDescription, taskStatus);
 
             taskCount = sharedPreferences.getLong("taskCount", 0);
             editor.putLong("taskCount", taskCount + 1);
@@ -81,18 +84,30 @@ public class AddTask extends AppCompatActivity {
         textView.setText("Total Tasks: " + taskCount);
     }
 
-    private void saveToDataStore(String taskTitle, String taskDescription, String taskStatus) {
+    private void saveToDataStore(String name, String taskTitle, String taskDescription, String taskStatus) {
 
-        Task task = Task.builder().title(taskTitle).description(taskDescription).status(taskStatus).build();
+        final Team[] team = new Team[1];
+        Amplify.API.query(ModelQuery.get(Team.class, name),
+                res ->
+                        team[0] = Team.builder().name(name).id(res.getData().getId()).build()
+                , error -> Log.i("MainActivity", error.getMessage()));
+
+        Task task = Task.builder().title(taskTitle).teamId(team[0].getId()).description(taskDescription).status(taskStatus).build();
+
         Amplify.DataStore.save(task,
                 success -> Log.i(TAG, "Saved item: " + success.item().getTitle()),
                 error -> Log.i(TAG, "Saved item: " + error.getMessage()));
     }
 
-    private void saveToApi(String taskTitle, String taskDescription, String taskStatus) {
-        Task task = Task.builder().title(taskTitle).description(taskDescription).status(taskStatus).build();
+    private void saveToApi(String name, String taskTitle, String taskDescription, String taskStatus) {
 
-        System.out.println(task.toString());
+        final Team[] team = new Team[1];
+        Amplify.API.query(ModelQuery.get(Team.class, name),
+                res ->
+                        team[0] = Team.builder().name(name).id(res.getData().getId()).build()
+                , error -> Log.i("MainActivity", error.getMessage()));
+
+        Task task = Task.builder().title(taskTitle).teamId(team[0].getId()).description(taskDescription).status(taskStatus).build();
 
         Amplify.API.mutate(ModelMutation.create(task),
                 success -> Log.i(TAG, "Saved item: " + success.getData().getTitle()),
