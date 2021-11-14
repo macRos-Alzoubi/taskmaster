@@ -17,6 +17,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         amplifyConfig();
+//        seedTeams();
 
         recyclerView = findViewById(R.id.task_recyleView);
 
@@ -70,11 +72,9 @@ public class MainActivity extends AppCompatActivity {
         getDataFromDynamoDBApi();
 
         handler = new Handler(Looper.getMainLooper(), message -> {
-            if (taskList.size() > 0) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                recyclerView.setAdapter(new TaskViewAdapter(taskList));
-                recyclerView.getAdapter().notifyDataSetChanged();
-            }
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(new TaskViewAdapter(taskList));
+            recyclerView.getAdapter().notifyDataSetChanged();
             return false;
         });
 
@@ -108,21 +108,31 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void getDataFromDynamoDBApi() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String name = sharedPreferences.getString("team", "Max");
-        final Team[] team = new Team[1];
+        String name = sharedPreferences.getString("team", null);
 
-        Amplify.API.query(ModelQuery.get(Team.class, name),
-                res ->
-                        team[0] = Team.builder().name(name).id(res.getData().getId()).build()
-                , error -> Log.i("MainActivity", error.getMessage()));
+        if (name != null) {
+            final Team[] team = new Team[1];
+            System.out.println("team name: " + name);
+            Amplify.API.query(ModelQuery.list(Team.class, Team.NAME.contains(name)),
 
-        Amplify.API.query(ModelQuery.list(Task.class, Task.TEAM_ID.contains(team[0].getId())),// edit team_id and add team obj or team name and query by it
-                success -> {
-                    taskList = new ArrayList<>();
-                    success.getData().forEach(task -> taskList.add(task));
-                    handler.sendEmptyMessage(1);
-                },
-                error -> Log.e(TAG, "Could not initialize Amplify", error));
+                    res -> {
+                        res.getData().forEach(team1 -> team[0] = team1);
+                        if (team[0] != null) {
+                            Amplify.API.query(ModelQuery.list(Task.class, Task.TEAM_ID.eq(team[0].getId())),// edit team_id and add team obj or team name and query by it
+                                    success -> {
+                                        taskList = new ArrayList<>();
+                                        success.getData().forEach(task -> taskList.add(task));
+                                        System.out.println("Task List:" + taskList);
+                                        handler.sendEmptyMessage(1);
+                                    },
+                                    error -> Log.e(TAG, "Could not initialize Amplify", error));
+                        }
+                    }
+                    , error -> Log.i("MainActivity", error.getMessage()));
+        } else {
+            Toast toast = Toast.makeText(getApplicationContext(), "Please select a team from settings page!", Toast.LENGTH_LONG);
+            toast.show();
+        }
     }
 
     private void amplifyConfig() {
