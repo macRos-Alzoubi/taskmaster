@@ -1,9 +1,11 @@
 package com.example.taskmaster;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -24,6 +26,7 @@ public class AddTask extends AppCompatActivity {
     private static final String TAG = "AddTask";
     Long taskCount;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,27 +51,32 @@ public class AddTask extends AppCompatActivity {
 
             TextView task_title = findViewById(R.id.text_task_title_2);
             TextView task_description = findViewById(R.id.text_task_description);
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = sharedPreferences.edit();
 
-            String taskTitle = task_title.getText().toString();
-            String taskDescription = task_description.getText().toString();
-            String taskStatus = statusSpinner.getSelectedItem().toString();
-            String tasksTeam = teamSpinner.getSelectedItem().toString();
+            if (task_title.getText().length() > 0 && task_description.getText().length() > 0) {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+                @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                String taskTitle = task_title.getText().toString();
+                String taskDescription = task_description.getText().toString();
+                String taskStatus = statusSpinner.getSelectedItem().toString();
+                String tasksTeam = teamSpinner.getSelectedItem().toString();
 
 //            saveToDataStore(taskTitle, taskDescription, taskStatus);
-            saveToApi(tasksTeam, taskTitle, taskDescription, taskStatus);
+                saveToApi(tasksTeam, taskTitle, taskDescription, taskStatus);
 
-            taskCount = sharedPreferences.getLong("taskCount", 0);
-            editor.putLong("taskCount", taskCount + 1);
-            editor.putString("team", tasksTeam);
-            editor.apply();
+                taskCount = sharedPreferences.getLong("taskCount", 0);
+                editor.putLong("taskCount", taskCount + 1);
+                editor.apply();
 
-            Toast toast = Toast.makeText(getApplicationContext(), "Submitted", Toast.LENGTH_LONG);
-            toast.show();
+                Toast toast = Toast.makeText(getApplicationContext(), "Submitted", Toast.LENGTH_LONG);
+                toast.show();
 
-            TextView textView = findViewById(R.id.text_total_task);
-            textView.setText("Total Tasks: " + (taskCount + 1));
+                TextView textView = findViewById(R.id.text_total_task);
+                textView.setText("Total Tasks: " + (taskCount + 1));
+
+                task_title.setText("");
+                task_description.setText("");
+            }
         });
     }
 
@@ -99,18 +107,20 @@ public class AddTask extends AppCompatActivity {
                 error -> Log.i(TAG, "Saved item: " + error.getMessage()));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void saveToApi(String name, String taskTitle, String taskDescription, String taskStatus) {
 
         final Team[] team = new Team[1];
-        Amplify.API.query(ModelQuery.get(Team.class, name),
-                res ->
-                        team[0] = Team.builder().name(name).id(res.getData().getId()).build()
+        Amplify.API.query(ModelQuery.list(Team.class, Team.NAME.contains(name)),
+                res -> {
+                    res.getData().forEach(team1 -> team[0] = team1);
+
+                    Task task = Task.builder().title(taskTitle).teamId(team[0].getId()).description(taskDescription).status(taskStatus).build();
+
+                    Amplify.API.mutate(ModelMutation.create(task),
+                            success -> Log.i(TAG, "Saved item: " + success.getData().getTitle()),
+                            error -> Log.i(TAG, "Saved item: " + error.getMessage()));
+                }
                 , error -> Log.i("MainActivity", error.getMessage()));
-
-        Task task = Task.builder().title(taskTitle).teamId(team[0].getId()).description(taskDescription).status(taskStatus).build();
-
-        Amplify.API.mutate(ModelMutation.create(task),
-                success -> Log.i(TAG, "Saved item: " + success.getData().getTitle()),
-                error -> Log.i(TAG, "Saved item: " + error.getMessage()));
     }
 }

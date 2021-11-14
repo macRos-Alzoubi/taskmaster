@@ -16,8 +16,8 @@ public class SettingsPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_page);
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sp.edit();
 
         Spinner teamSpinner = findViewById(R.id.settings_teams_spinner);
 
@@ -27,13 +27,13 @@ public class SettingsPage extends AppCompatActivity {
 
         findViewById(R.id.button_save).setOnClickListener(view -> {
             TextView usernameField = findViewById(R.id.text_username);
-            if(!usernameField.getText().toString().equals("")){
-                editor.putString("username", usernameField.getText().toString());
-                editor.putString("team", teamSpinner.getSelectedItem().toString());
 
-                editor.apply();
-                usernameField.setText("");
-            }
+            String username = usernameField.getText().length() == 0 ? "macRosX" : usernameField.getText().toString();
+            editor.putString("username", username);
+            editor.putString("team", teamSpinner.getSelectedItem().toString());
+            editor.apply();
+            usernameField.setText("");
+
         });
     }
 }
