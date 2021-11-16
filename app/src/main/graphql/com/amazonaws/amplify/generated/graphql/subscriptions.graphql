@@ -6,6 +6,9 @@ subscription OnCreateTask {
     description
     status
     teamId
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -17,6 +20,9 @@ subscription OnUpdateTask {
     description
     status
     teamId
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -28,6 +34,9 @@ subscription OnDeleteTask {
     description
     status
     teamId
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -43,11 +52,18 @@ subscription OnCreateTeam {
         description
         status
         teamId
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -63,11 +79,18 @@ subscription OnUpdateTeam {
         description
         status
         teamId
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -83,11 +106,18 @@ subscription OnDeleteTeam {
         description
         status
         teamId
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }

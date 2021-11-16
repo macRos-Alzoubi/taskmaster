@@ -9,6 +9,9 @@ mutation CreateTask(
     description
     status
     teamId
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -23,6 +26,9 @@ mutation UpdateTask(
     description
     status
     teamId
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -37,6 +43,9 @@ mutation DeleteTask(
     description
     status
     teamId
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -55,11 +64,18 @@ mutation CreateTeam(
         description
         status
         teamId
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -78,11 +94,18 @@ mutation UpdateTeam(
         description
         status
         teamId
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
@@ -101,11 +124,18 @@ mutation DeleteTeam(
         description
         status
         teamId
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
     }
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
   }
