@@ -32,4 +32,15 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="task_name">task name</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="signin">Signin</string>
+    <string name="create_new_account">Create new account</string>
+    <string name="signup">Signup</string>
+    <string name="already_have_an_account">Already have an account</string>
+    <string name="you_will_receive_a_message_that_contains_a_verification_number">You will receive a message that contains a verification number</string>
+    <string name="please_enter_the_verification_number">Please enter the verification number</string>
+    <string name="verification_number">Verification number</string>
+    <string name="confirm">Confirm</string>
+    <string name="resend_code">RESEND CODE</string>
 </resources>

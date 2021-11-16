@@ -11,7 +11,11 @@
         <entry key="..\:/Users/STUDENT/java-401/taskMaster/app/src/main/res/layout/fragment_student.xml" value="0.25" />
         <entry key="..\:/Users/STUDENT/java-401/taskMaster/app/src/main/res/layout/fragment_task_list.xml" value="0.25" />
         <entry key="..\:/Users/STUDENT/java-401/taskmaster/app/src/main/res/layout/activity_add_task.xml" value="0.33" />
+        <entry key="..\:/Users/STUDENT/java-401/taskmaster/app/src/main/res/layout/activity_confirm_account.xml" value="0.33" />
+        <entry key="..\:/Users/STUDENT/java-401/taskmaster/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/STUDENT/java-401/taskmaster/app/src/main/res/layout/activity_settings_page.xml" value="0.33" />
+        <entry key="..\:/Users/STUDENT/java-401/taskmaster/app/src/main/res/layout/activity_signin.xml" value="0.25" />
+        <entry key="..\:/Users/STUDENT/java-401/taskmaster/app/src/main/res/layout/activity_signup.xml" value="0.25" />
       </map>
     </option>
   </component>
