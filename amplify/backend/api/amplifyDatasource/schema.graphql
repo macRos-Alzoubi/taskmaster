@@ -6,6 +6,7 @@ type Task @model
   description: String
   status: String
   teamId: ID!
+  imgUrl: String
 }
 
 type Team @model{

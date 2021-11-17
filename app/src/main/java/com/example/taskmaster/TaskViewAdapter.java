@@ -14,7 +14,7 @@ import com.amplifyframework.datastore.generated.model.Task;
 import java.util.List;
 
 public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskViewHolder> {
-    private List<Task> taskList;
+    private final List<Task> taskList;
 
     public TaskViewAdapter(List<Task> taskList) {
         this.taskList = taskList;
@@ -58,6 +58,7 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
             intent.putExtra("title", task.getTitle());
             intent.putExtra("body", task.getDescription());
             intent.putExtra("status", task.getStatus());
+            intent.putExtra("imageUrl", task.getImgUrl());
             view.getContext().startActivity(intent);
         }
     }
