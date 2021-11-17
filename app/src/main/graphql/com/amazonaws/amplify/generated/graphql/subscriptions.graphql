@@ -6,6 +6,7 @@ subscription OnCreateTask {
     description
     status
     teamId
+    imgUrl
     _version
     _deleted
     _lastChangedAt
@@ -20,6 +21,7 @@ subscription OnUpdateTask {
     description
     status
     teamId
+    imgUrl
     _version
     _deleted
     _lastChangedAt
@@ -34,6 +36,7 @@ subscription OnDeleteTask {
     description
     status
     teamId
+    imgUrl
     _version
     _deleted
     _lastChangedAt
@@ -52,6 +55,7 @@ subscription OnCreateTeam {
         description
         status
         teamId
+        imgUrl
         _version
         _deleted
         _lastChangedAt
@@ -79,6 +83,7 @@ subscription OnUpdateTeam {
         description
         status
         teamId
+        imgUrl
         _version
         _deleted
         _lastChangedAt
@@ -106,6 +111,7 @@ subscription OnDeleteTeam {
         description
         status
         teamId
+        imgUrl
         _version
         _deleted
         _lastChangedAt

@@ -43,4 +43,9 @@
     <string name="verification_number">Verification number</string>
     <string name="confirm">Confirm</string>
     <string name="resend_code">RESEND CODE</string>
+    <string name="task_status">task status</string>
+    <string name="task_img">task_img</string>
+    <string name="back">BACK</string>
+    <string name="upload_file">UPLOAD FILE</string>
+    <string name="task_detail">Task Detail</string>
 </resources>

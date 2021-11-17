@@ -10,6 +10,7 @@
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
               "apiKeyExpirationDays": 50,
+              "apiKeyExpirationDate": "2022-01-05T22:21:36.911Z",
               "description": "macKey"
             }
           }
@@ -43,6 +44,12 @@
           "EMAIL"
         ]
       }
+    }
+  },
+  "storage": {
+    "taskMasterStore": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
     }
   }
 }

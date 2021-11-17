@@ -26,11 +26,13 @@ public final class Task implements Model {
   public static final QueryField DESCRIPTION = field("Task", "description");
   public static final QueryField STATUS = field("Task", "status");
   public static final QueryField TEAM_ID = field("Task", "teamId");
+  public static final QueryField IMG_URL = field("Task", "imgUrl");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String title;
   private final @ModelField(targetType="String") String description;
   private final @ModelField(targetType="String") String status;
   private final @ModelField(targetType="ID", isRequired = true) String teamId;
+  private final @ModelField(targetType="String") String imgUrl;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String getId() {
@@ -53,6 +55,10 @@ public final class Task implements Model {
       return teamId;
   }
   
+  public String getImgUrl() {
+      return imgUrl;
+  }
+  
   public Temporal.DateTime getCreatedAt() {
       return createdAt;
   }
@@ -61,12 +67,13 @@ public final class Task implements Model {
       return updatedAt;
   }
   
-  private Task(String id, String title, String description, String status, String teamId) {
+  private Task(String id, String title, String description, String status, String teamId, String imgUrl) {
     this.id = id;
     this.title = title;
     this.description = description;
     this.status = status;
     this.teamId = teamId;
+    this.imgUrl = imgUrl;
   }
   
   @Override
@@ -82,6 +89,7 @@ public final class Task implements Model {
               ObjectsCompat.equals(getDescription(), task.getDescription()) &&
               ObjectsCompat.equals(getStatus(), task.getStatus()) &&
               ObjectsCompat.equals(getTeamId(), task.getTeamId()) &&
+              ObjectsCompat.equals(getImgUrl(), task.getImgUrl()) &&
               ObjectsCompat.equals(getCreatedAt(), task.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), task.getUpdatedAt());
       }
@@ -95,6 +103,7 @@ public final class Task implements Model {
       .append(getDescription())
       .append(getStatus())
       .append(getTeamId())
+      .append(getImgUrl())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -110,6 +119,7 @@ public final class Task implements Model {
       .append("description=" + String.valueOf(getDescription()) + ", ")
       .append("status=" + String.valueOf(getStatus()) + ", ")
       .append("teamId=" + String.valueOf(getTeamId()) + ", ")
+      .append("imgUrl=" + String.valueOf(getImgUrl()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
@@ -134,6 +144,7 @@ public final class Task implements Model {
       null,
       null,
       null,
+      null,
       null
     );
   }
@@ -143,7 +154,8 @@ public final class Task implements Model {
       title,
       description,
       status,
-      teamId);
+      teamId,
+      imgUrl);
   }
   public interface TitleStep {
     TeamIdStep title(String title);
@@ -160,6 +172,7 @@ public final class Task implements Model {
     BuildStep id(String id);
     BuildStep description(String description);
     BuildStep status(String status);
+    BuildStep imgUrl(String imgUrl);
   }
   
 
@@ -169,6 +182,7 @@ public final class Task implements Model {
     private String teamId;
     private String description;
     private String status;
+    private String imgUrl;
     @Override
      public Task build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
@@ -178,7 +192,8 @@ public final class Task implements Model {
           title,
           description,
           status,
-          teamId);
+          teamId,
+          imgUrl);
     }
     
     @Override
@@ -207,6 +222,12 @@ public final class Task implements Model {
         return this;
     }
     
+    @Override
+     public BuildStep imgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+        return this;
+    }
+    
     /** 
      * @param id id
      * @return Current Builder instance, for fluent method chaining
@@ -219,12 +240,13 @@ public final class Task implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String title, String description, String status, String teamId) {
+    private CopyOfBuilder(String id, String title, String description, String status, String teamId, String imgUrl) {
       super.id(id);
       super.title(title)
         .teamId(teamId)
         .description(description)
-        .status(status);
+        .status(status)
+        .imgUrl(imgUrl);
     }
     
     @Override
@@ -245,6 +267,11 @@ public final class Task implements Model {
     @Override
      public CopyOfBuilder status(String status) {
       return (CopyOfBuilder) super.status(status);
+    }
+    
+    @Override
+     public CopyOfBuilder imgUrl(String imgUrl) {
+      return (CopyOfBuilder) super.imgUrl(imgUrl);
     }
   }
   
