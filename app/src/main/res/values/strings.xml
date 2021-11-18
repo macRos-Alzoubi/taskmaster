@@ -48,4 +48,6 @@
     <string name="back">BACK</string>
     <string name="upload_file">UPLOAD FILE</string>
     <string name="task_detail">Task Detail</string>
+    <string name="channel_name">taskMaster</string>
+    <string name="channel_description">notification for new task</string>
 </resources>

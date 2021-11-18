@@ -10,7 +10,7 @@
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
               "apiKeyExpirationDays": 50,
-              "apiKeyExpirationDate": "2022-01-05T22:21:36.911Z",
+              "apiKeyExpirationDate": "2022-01-07T15:30:05.893Z",
               "description": "macKey"
             }
           }
@@ -50,6 +50,14 @@
     "taskMasterStore": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
+    }
+  },
+  "notifications": {
+    "taskMasterPinpoint": {
+      "service": "Pinpoint",
+      "channels": [
+        "FCM"
+      ]
     }
   }
 }

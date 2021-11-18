@@ -14,6 +14,13 @@
     "categories": {
       "auth": {
         "taskmaster467df5e2": {}
+      },
+      "notifications": {
+        "Pinpoint": {
+          "Name": "taskMasterPinpoint-dev",
+          "Id": "735f86601a124a69ba344a69d3d9382f",
+          "Region": "eu-central-1"
+        }
       }
     }
   }

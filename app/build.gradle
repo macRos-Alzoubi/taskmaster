@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -74,4 +75,20 @@ dependencies {
     implementation 'com.github.onimur:handle-path-oz:1.0.7'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'commons-io:commons-io:2.6'
+
+    // firebase
+    implementation platform('com.google.firebase:firebase-bom:29.0.0')
+    implementation 'com.google.firebase:firebase-analytics'
+
+    // Overrides an auth dependency to ensure correct behavior
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
+
+    // Import the BoM for the Firebase platform
+    implementation 'com.google.firebase:firebase-messaging'
+
+    //pinpoint
+    implementation 'com.amazonaws:aws-android-sdk-pinpoint:2.33.0'
+
+    implementation 'com.amazonaws:aws-android-sdk-mobile-client:2.33.0'
+
 }
