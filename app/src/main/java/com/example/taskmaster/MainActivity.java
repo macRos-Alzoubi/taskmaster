@@ -25,6 +25,7 @@ import com.amazonaws.mobile.client.UserStateDetails;
 import com.amazonaws.mobile.config.AWSConfiguration;
 import com.amazonaws.mobileconnectors.pinpoint.PinpointConfiguration;
 import com.amazonaws.mobileconnectors.pinpoint.PinpointManager;
+import com.amplifyframework.analytics.AnalyticsEvent;
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sendAnalytics(this.toString(), Signin.class.toString());
 
 //        seedTeams();
 
@@ -94,7 +96,8 @@ public class MainActivity extends AppCompatActivity {
 
         getUserName();
         getDataFromDynamoDBApi();
-        getPinpointManager(getApplicationContext());
+        final PinpointManager pinpointManager = getPinpointManager(getApplicationContext());
+        pinpointManager.getSessionClient().startSession();
 
         button.setOnClickListener(View -> {
             Intent intent = new Intent(MainActivity.this, AddTask.class);
@@ -125,6 +128,16 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
+    }
+
+    public static void sendAnalytics(String current, String prev) {
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("Activity Changed")
+                .addProperty("Current Activity", current)
+                .addProperty("Prev", prev)
+                .build();
+
+        Amplify.Analytics.recordEvent(event);
     }
 
     private void logout() {

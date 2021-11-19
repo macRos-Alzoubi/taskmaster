@@ -66,6 +66,8 @@ public class AddTask extends AppCompatActivity implements HandlePathOzListener.S
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
+        MainActivity.sendAnalytics(this.toString(), MainActivity.class.toString());
+
         Spinner teamSpinner = findViewById(R.id.team_spinner);
         Spinner statusSpinner = findViewById(R.id.task_status_dropdown);
 
