@@ -59,5 +59,11 @@
         "FCM"
       ]
     }
+  },
+  "analytics": {
+    "taskMasterPinpoint": {
+      "service": "Pinpoint",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }

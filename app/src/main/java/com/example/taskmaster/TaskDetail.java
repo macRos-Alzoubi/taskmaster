@@ -21,6 +21,8 @@ public class TaskDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
 
+        MainActivity.sendAnalytics(this.toString(), MainActivity.class.toString());
+
         Intent intent = getIntent();
 
         String taskTitle = intent.getStringExtra("title");
