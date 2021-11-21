@@ -54,6 +54,7 @@ public class AddTask extends AppCompatActivity implements HandlePathOzListener.S
     private HandlePathOz handlePathOz;
     private Handler taskFileHandler;
     private String taskFileUrl = "";
+    private Uri fileUri;
 //    ActivityResultLauncher<Intent> fileLoader;
 
 
@@ -67,6 +68,18 @@ public class AddTask extends AppCompatActivity implements HandlePathOzListener.S
         setContentView(R.layout.activity_add_task);
 
         MainActivity.sendAnalytics(this.toString(), MainActivity.class.toString());
+        initHandlePathOz();
+
+        Intent intent = getIntent();
+//        if(intent.getClipData().getItemAt(0) != null) {
+//            fileUri = intent.getClipData().getItemAt(0).getUri();
+//            System.out.println(fileUri);
+//            handlePathOz.getRealPath(fileUri);
+//        }
+        if (getIntent().getClipData() != null) {
+            fileUri = getIntent().getClipData().getItemAt(0).getUri();
+            handlePathOz.getRealPath(fileUri);
+        }
 
         Spinner teamSpinner = findViewById(R.id.team_spinner);
         Spinner statusSpinner = findViewById(R.id.task_status_dropdown);
@@ -79,7 +92,6 @@ public class AddTask extends AppCompatActivity implements HandlePathOzListener.S
         teamArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         teamSpinner.setAdapter(teamArrayAdapter);
 
-        initHandlePathOz();
         findViewById(R.id.addTask_fileUpload_btn).setOnClickListener(view -> {
             openFile();
         });
@@ -249,6 +261,7 @@ public class AddTask extends AppCompatActivity implements HandlePathOzListener.S
                                 Message message = new Message();
                                 message.setData(bundle);
                                 taskFileHandler.sendMessage(message);
+                                fileUri = null;
                             },
                             error -> Log.e("MyAmplifyApp", "URL generation failure", error)
                     );
