@@ -22,7 +22,7 @@
             android:name=".PushListenerService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
@@ -57,11 +57,22 @@
             android:exported="true"
             android:launchMode="singleTop"
             android:parentActivityName=".MainActivity" />
+
         <activity
             android:name=".AddTask"
-            android:exported="true"
-            android:launchMode="singleTop"
-            android:parentActivityName=".MainActivity" />
+            android:label="@string/app_name"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*"/>
+                <data android:mimeType="video/*"/>
+                <data android:mimeType="text/plain"/>
+                <data android:mimeType="audio/*" />
+                <data android:mimeType="text/*" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
