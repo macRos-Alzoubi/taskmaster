@@ -18,6 +18,8 @@ query SyncTasks(
       status
       teamId
       imgUrl
+      lat
+      lon
       _version
       _deleted
       _lastChangedAt
@@ -36,6 +38,8 @@ query GetTask($id: ID!) {
     status
     teamId
     imgUrl
+    lat
+    lon
     _version
     _deleted
     _lastChangedAt
@@ -56,6 +60,8 @@ query ListTasks(
       status
       teamId
       imgUrl
+      lat
+      lon
       _version
       _deleted
       _lastChangedAt
@@ -107,6 +113,8 @@ query GetTeam($id: ID!) {
         status
         teamId
         imgUrl
+        lat
+        lon
         _version
         _deleted
         _lastChangedAt

@@ -7,6 +7,8 @@ subscription OnCreateTask {
     status
     teamId
     imgUrl
+    lat
+    lon
     _version
     _deleted
     _lastChangedAt
@@ -22,6 +24,8 @@ subscription OnUpdateTask {
     status
     teamId
     imgUrl
+    lat
+    lon
     _version
     _deleted
     _lastChangedAt
@@ -37,6 +41,8 @@ subscription OnDeleteTask {
     status
     teamId
     imgUrl
+    lat
+    lon
     _version
     _deleted
     _lastChangedAt
@@ -56,6 +62,8 @@ subscription OnCreateTeam {
         status
         teamId
         imgUrl
+        lat
+        lon
         _version
         _deleted
         _lastChangedAt
@@ -84,6 +92,8 @@ subscription OnUpdateTeam {
         status
         teamId
         imgUrl
+        lat
+        lon
         _version
         _deleted
         _lastChangedAt
@@ -112,6 +122,8 @@ subscription OnDeleteTeam {
         status
         teamId
         imgUrl
+        lat
+        lon
         _version
         _deleted
         _lastChangedAt

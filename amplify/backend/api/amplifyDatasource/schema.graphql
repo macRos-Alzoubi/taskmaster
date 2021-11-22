@@ -7,6 +7,8 @@ type Task @model
   status: String
   teamId: ID!
   imgUrl: String
+  lat: Float
+  lon: Float
 }
 
 type Team @model{

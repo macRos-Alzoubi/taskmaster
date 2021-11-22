@@ -59,6 +59,8 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
             intent.putExtra("body", task.getDescription());
             intent.putExtra("status", task.getStatus());
             intent.putExtra("imageUrl", task.getImgUrl());
+            intent.putExtra("lat", task.getLat());
+            intent.putExtra("lon", task.getLon());
             view.getContext().startActivity(intent);
         }
     }
