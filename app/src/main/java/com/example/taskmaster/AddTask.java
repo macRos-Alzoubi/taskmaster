@@ -9,9 +9,12 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +23,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,6 +36,11 @@ import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 
 import br.com.onimur.handlepathoz.HandlePathOz;
 import br.com.onimur.handlepathoz.HandlePathOzListener;
@@ -51,10 +60,24 @@ public class AddTask extends AppCompatActivity implements HandlePathOzListener.S
     private static final String TAG = "AddTask";
     private static final int REQUEST_PERMISSION = 123;
     private static final int REQUEST_OPEN_GALLERY = 1111;
+    private static final int PERMISSION_ID = 44;
+    private double lon;
+    private double lat;
     private HandlePathOz handlePathOz;
     private Handler taskFileHandler;
     private String taskFileUrl = "";
     private Uri fileUri;
+//    private Location location;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+
+    private final LocationCallback mLocationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            Location mLastLocation = locationResult.getLastLocation();
+            Log.i(TAG, "The location is => " + mLastLocation);
+        }
+    };
+
 //    ActivityResultLauncher<Intent> fileLoader;
 
 
@@ -70,12 +93,10 @@ public class AddTask extends AppCompatActivity implements HandlePathOzListener.S
         MainActivity.sendAnalytics(this.toString(), MainActivity.class.toString());
         initHandlePathOz();
 
-        Intent intent = getIntent();
-//        if(intent.getClipData().getItemAt(0) != null) {
-//            fileUri = intent.getClipData().getItemAt(0).getUri();
-//            System.out.println(fileUri);
-//            handlePathOz.getRealPath(fileUri);
-//        }
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        findViewById(R.id.add_task_getlocation_btn).setOnClickListener(view -> getLastLocation());
+
         if (getIntent().getClipData() != null) {
             fileUri = getIntent().getClipData().getItemAt(0).getUri();
             handlePathOz.getRealPath(fileUri);
@@ -147,6 +168,78 @@ public class AddTask extends AppCompatActivity implements HandlePathOzListener.S
             }
         });
     }
+
+    @SuppressLint("MissingPermission")
+    private void getLastLocation() {
+        if (checkPermissions()) {
+
+            if (isLocationEnabled()) {
+
+                fusedLocationProviderClient.getLastLocation().addOnCompleteListener(task -> {
+
+                    Location location = task.getResult();
+
+                    if (location == null) {
+                        Log.i(TAG ,"in location false");
+                        requestNewLocationData();
+                    } else {
+                        Log.i(TAG ,"in location true");
+                        lat = location.getLatitude();
+                        lon = location.getLongitude();
+                        Log.i(TAG ,"in location true lon: " + lon);
+                        Log.i(TAG ,"in location true lat: " + lat);
+
+                    }
+                });
+            } else {
+                Toast.makeText(this, "Please turn on your location...", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        }else
+            requestPermissions();
+    }
+
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(this, new String[]{
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ID);
+    }
+
+
+    @SuppressLint("MissingPermission")
+    private void requestNewLocationData() {
+        // Initializing LocationRequest
+        // object with appropriate methods
+        LocationRequest locationRequest = new LocationRequest();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(5);
+        locationRequest.setFastestInterval(0);
+        locationRequest.setNumUpdates(10);
+
+        // setting LocationRequest
+        // on FusedLocationClient
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this); // this may or may not be needed
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, mLocationCallback, Looper.myLooper());
+    }
+
+    private boolean checkPermissions() {
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+        // If we want background location
+        // on Android 10.0 and higher,
+        // use:
+        // ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private boolean isLocationEnabled() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
 
     private void openFile() {
         if (checkSelfPermission()) {
@@ -220,6 +313,8 @@ public class AddTask extends AppCompatActivity implements HandlePathOzListener.S
                             .teamId(team[0].getId())
                             .imgUrl(taskFileUrl)
                             .description(taskDescription)
+                            .lat(lat)
+                            .lon(lon)
                             .status(taskStatus).build();
 
                     Amplify.API.mutate(ModelMutation.create(task),
@@ -273,6 +368,13 @@ public class AddTask extends AppCompatActivity implements HandlePathOzListener.S
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == PERMISSION_ID) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getLastLocation();
+            }
+        }
+
         if (requestCode == REQUEST_PERMISSION) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 openFile();

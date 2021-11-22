@@ -10,6 +10,8 @@ mutation CreateTask(
     status
     teamId
     imgUrl
+    lat
+    lon
     _version
     _deleted
     _lastChangedAt
@@ -28,6 +30,8 @@ mutation UpdateTask(
     status
     teamId
     imgUrl
+    lat
+    lon
     _version
     _deleted
     _lastChangedAt
@@ -46,6 +50,8 @@ mutation DeleteTask(
     status
     teamId
     imgUrl
+    lat
+    lon
     _version
     _deleted
     _lastChangedAt
@@ -68,6 +74,8 @@ mutation CreateTeam(
         status
         teamId
         imgUrl
+        lat
+        lon
         _version
         _deleted
         _lastChangedAt
@@ -99,6 +107,8 @@ mutation UpdateTeam(
         status
         teamId
         imgUrl
+        lat
+        lon
         _version
         _deleted
         _lastChangedAt
@@ -130,6 +140,8 @@ mutation DeleteTeam(
         status
         teamId
         imgUrl
+        lat
+        lon
         _version
         _deleted
         _lastChangedAt
