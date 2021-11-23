@@ -43,3 +43,8 @@ Android app that help you manging your tasks in friendly way
 ## 41
 
 ![shear](app/screenshots/lab-41.png1)
+
+## 42
+
+![add-task-with-location](app/screenshots/lab-42_add_task.png)
+![task-details-with-map](app/screenshots/lab-42_details.png)
